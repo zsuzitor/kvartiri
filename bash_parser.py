@@ -2,26 +2,27 @@ from bs4 import BeautifulSoup
 import requests
 
 if __name__ == '__main__':
-    # ссылка для парсинга
     url_page = 'http://krasnodar.irr.ru/real-estate/apartments-sale/new/studiya-im-evgenii-zhigulenko-ul-9-advert630802162.html'
-   # print("0")
-    # получаем содержимое страницы
     r = requests.get(url_page)
-    # преобразуем текст в структуру BeautifulSoup
     soup = BeautifulSoup(r.text, 'html.parser')
     
-    # находим тег div с id='body'
-    body = soup.find('div', id='body')
+    header = soup.find('h1', 'productPage__title').text
+    print(header)
     
-    #if body is None:
-        # если нет такого блока, то выходим
-        #print("0")
-        #exit()
+    cena=soup.find('div', 'productPage__price').text
+    print(cena)
+    
+    opisanie_k=soup.find('p', 'productPage__descriptionText').text
+    print(opisanie_k)
     for item in soup.find_all('span', 'productPage__characteristicsItemValue'):
-    # итерируемся по всем div блокам с классом quote
-    #company = soup.select('h1.productPage__title js-productPageTitle productPage__title_lines_1')[0].text.strip()
-    #print("1")
-        #rate_block = item.find('span', 'productPage__characteristicsItemValue')
-    #print("2")
-        rate = item.text
-        print(rate)
+        pod_header = item.text
+        print(pod_header)
+
+    #odin_is_3_div_info=soup.find_all('div', 'productPage__infoColumnBlock')
+        s4et=1
+    for item in soup.find_all('div', 'productPage__infoColumnBlock'):
+        #print("info"+s4et+""+item1.text)
+        print('info{}'.format(s4et))
+        for item1 in item.find_all('li', 'productPage__infoColumnBlockText'):
+            print(item1.text)
+        s4et+=1
