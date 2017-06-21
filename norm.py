@@ -39,9 +39,6 @@ if __name__ == '__main__':
                     try:
                         header = soup.find('h1', 'productPage__title').text
                         header=re.sub('\s+',' ',header)
-                        #header=re.sub('\t','',header)
-                        #header.replace('\n', '')
-                        #header.replace('\t', '')
                         data["header"]=header
                         print(header)
                     except:
@@ -49,9 +46,6 @@ if __name__ == '__main__':
                     try:
                         cena=soup.find('div', 'productPage__price').text
                         cena=re.sub('\s+',' ',cena)
-                        #cena=re.sub('\t','',cena)
-                        #cena.replace('\n', '')
-                        #cena.replace('\t', '')
                         data["cena"]=cena
                         print(cena)
                     except:
@@ -60,18 +54,12 @@ if __name__ == '__main__':
                     for item in soup.find_all('span', 'productPage__characteristicsItemValue'):
                         pod_header = item.text
                         pod_header=re.sub('\s+',' ',pod_header)
-                        #pod_header=re.sub('\t','',pod_header)
-                        #pod_header.replace('\n', '')
-                        #pod_header.replace('\t', '')
                         pod_header_str_o+=pod_header+" "
                         print(pod_header)
                     data["pod_header"]=pod_header_str_o
                     try:    
                         opisanie_k=soup.find('p', 'productPage__descriptionText').text
                         opisanie_k=re.sub('\s+',' ',opisanie_k)
-                        #opisanie_k=re.sub('\t','',opisanie_k)
-                        #opisanie_k.replace('\n', '')
-                        #opisanie_k.replace('\t', '')
                         data["opisanie"]=opisanie_k
                         print(opisanie_k)
                     except:
@@ -82,26 +70,15 @@ if __name__ == '__main__':
                         print('info{}'.format(s4et))
                         for item1 in item.find_all('li', 'productPage__infoColumnBlockText'):
                             temp+=item1.text+" "
-                            
-                            #temp.replace('\n', '')
-                            #temp.replace('\t', '')
-                            
-                        
                         temp=re.sub('\s+',' ',temp)
-                        #temp=re.sub('\t','',temp)
                         print(temp)
                         data["dop_info"+str(s4et)]=temp
                         temp=""
                         s4et+=1
-                    
-                    
                     try:
-                        #f = open('text.txt', 'a',"utf-8")
-                        #f.write(GLAVNAYA_STROKA + '\n'+"______________________")
-                        with open('data.json', 'a', encoding='utf-8') as fh: #открываем файл на запись
-                            fh.write(json.dumps(data, ensure_ascii=False)) #преобразовываем словарь data в unicode-строку и записываем в файл
+                        with open('data.json', 'a', encoding='utf-8') as fh:
+                            fh.write(json.dumps(data, ensure_ascii=False))
                         data={}
-                        #f.close()
                     except:
                         print("===================ERROR========================")
                         time.sleep(10)
