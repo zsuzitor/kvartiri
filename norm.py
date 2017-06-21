@@ -68,12 +68,12 @@ if __name__ == '__main__':
                             GLAVNAYA_STROKA+=item1.text
                             print(item1.text)
                         s4et+=1
-                        try:
-                            f = open('text.txt', 'a')
-                            f.write(GLAVNAYA_STROKA + '\n'+"______________________")
-                            GLAVNAYA_STROKA=""
-                            f.close()
-                        except:
-                            print("===================ERROR========================")
-                            time.sleep(10)
+                    try:
+                        f = open('text.txt', 'a')
+                        f.write(GLAVNAYA_STROKA + '\n'+"______________________")
+                        GLAVNAYA_STROKA=""
+                        f.close()
+                    except:
+                        print("===================ERROR========================")
+                        time.sleep(10)
                     print("______________________")
