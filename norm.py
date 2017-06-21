@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+import json
 
 if __name__ == '__main__':
     GLAVNAYA_STROKA=""
@@ -69,7 +70,7 @@ if __name__ == '__main__':
                             print(item1.text)
                         s4et+=1
                     try:
-                        f = open('text.txt', 'a')
+                        f = open('text.txt', 'a',"utf-8")
                         f.write(GLAVNAYA_STROKA + '\n'+"______________________")
                         GLAVNAYA_STROKA=""
                         f.close()
