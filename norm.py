@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import time
 import json
+import re
 
 if __name__ == '__main__':
     data={}
@@ -37,44 +38,63 @@ if __name__ == '__main__':
                     soup = BeautifulSoup(r.text, 'html.parser')
                     try:
                         header = soup.find('h1', 'productPage__title').text
-                        header.replace('\n', '')
-                        header.replace('\t', '')
+                        header=re.sub('\s+',' ',header)
+                        #header=re.sub('\t','',header)
+                        #header.replace('\n', '')
+                        #header.replace('\t', '')
                         data["header"]=header
                         print(header)
                     except:
                         print("")
                     try:
                         cena=soup.find('div', 'productPage__price').text
-                        cena.replace('\n', '')
-                        cena.replace('\t', '')
+                        cena=re.sub('\s+',' ',cena)
+                        #cena=re.sub('\t','',cena)
+                        #cena.replace('\n', '')
+                        #cena.replace('\t', '')
                         data["cena"]=cena
                         print(cena)
                     except:
                         print("")
+                    pod_header_str_o=""
                     for item in soup.find_all('span', 'productPage__characteristicsItemValue'):
                         pod_header = item.text
-                        pod_header.replace('\n', '')
-                        pod_header.replace('\t', '')
-                        data["pod_header"]=pod_header
+                        pod_header=re.sub('\s+',' ',pod_header)
+                        #pod_header=re.sub('\t','',pod_header)
+                        #pod_header.replace('\n', '')
+                        #pod_header.replace('\t', '')
+                        pod_header_str_o+=pod_header+" "
                         print(pod_header)
+                    data["pod_header"]=pod_header_str_o
                     try:    
                         opisanie_k=soup.find('p', 'productPage__descriptionText').text
-                        opisanie_k.replace('\n', '')
-                        opisanie_k.replace('\t', '')
+                        opisanie_k=re.sub('\s+',' ',opisanie_k)
+                        #opisanie_k=re.sub('\t','',opisanie_k)
+                        #opisanie_k.replace('\n', '')
+                        #opisanie_k.replace('\t', '')
                         data["opisanie"]=opisanie_k
                         print(opisanie_k)
                     except:
                         print("")
                     s4et=1
+                    temp=""
                     for item in soup.find_all('div', 'productPage__infoColumnBlock'):
                         print('info{}'.format(s4et))
                         for item1 in item.find_all('li', 'productPage__infoColumnBlockText'):
-                            temp=item1.text
-                            temp.replace('\n', '')
-                            temp.replace('\t', '')
-                            data["dop_info"+str(s4et)]=temp
-                            print(temp)
+                            temp+=item1.text+" "
+                            
+                            #temp.replace('\n', '')
+                            #temp.replace('\t', '')
+                            
+                        
+                        temp=re.sub('\s+',' ',temp)
+                        #temp=re.sub('\t','',temp)
+                        print(temp)
+                        data["dop_info"+str(s4et)]=temp
+                        temp=""
                         s4et+=1
+                    
+                    
                     try:
                         #f = open('text.txt', 'a',"utf-8")
                         #f.write(GLAVNAYA_STROKA + '\n'+"______________________")
