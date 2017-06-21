@@ -1,0 +1,23 @@
+хедер(колич комнат, улица дом) <h1 class="productPage__title
+цена  <div class="productPage__price
+подхэдер
+	
+	количество комнат <span class="productPage__characteristicsItemValue">
+	площадь общая  <span class="productPage__characteristicsItemValue">
+	этаж  <span class="productPage__characteristicsItemValue">
+
+
+описание <p class="productPage__descriptionText
+
+доп информация
+	Об объявлении  <h3 class="productPage__infoColumnBlockTitle">Об объявлении</h3><ul><li class="productPage__infoColumnBlockText"> ................
+	Подробнее о квартире  <h3 class="productPage__infoColumnBlockTitle">Подробнее о квартире</h3><ul><li class="productPage__infoColumnBlockText">  ...........
+	Подробнее о здании  <h3 class="productPage__infoColumnBlockTitle">Подробнее о здании</h3><ul><li class="productPage__infoColumnBlockText"> ......
+
+
+
+
+
+===========================
+некоторых полей часто нет
+у многих блоков один класс
