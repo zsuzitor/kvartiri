@@ -6,6 +6,7 @@ import re
 
 if __name__ == '__main__':
     data={}
+    data_error={}
     koli4estvo_zapisey=0
     koli4estvo_error=0
     url_page_1 ="http://irr.ru/real-estate/"
@@ -53,6 +54,12 @@ if __name__ == '__main__':
                     list_img=[]
                     for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
                         list_img.append(image.attrs['content'])
+                        #
+                    #soup_img_div=soup.find('div','productGallery__nav')
+                    #lsth=soup_img_div.find_all("a")
+                    #for image in soup_img_div.find_all("a"):  
+                        #list_img.append(image.attrs["href"])
+                    
                     data["картинки"]=list_img  
                     try:
                         header = soup.find('h1', 'productPage__title').text
@@ -60,25 +67,30 @@ if __name__ == '__main__':
                         data["хэдер"]=header
                     except:
                         koli4estvo_error+=1
-                        print("")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="1"
+                        print("123")
                     try:
                         cena=soup.find('div', 'productPage__price').text
                         cena=re.sub('\s+',' ',cena)
                         data["цена"]=cena
                     except:
                         koli4estvo_error+=1
-                        print("")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="2"
+                        print("1234")
                     try:
                         data['номер']=re.sub('\s+',' ',soup.find('div', 'productPage__phoneText').text)
                         tt1=soup.find('div', 'productPage__inlineWrapper')
                     except:
                         koli4estvo_error+=1
-                        print("")
-                    try:
-                        data['имя']=re.sub('\s+',' ',tt1.find('div', 'productPage__infoTextBold').text)
-                    except:
-                        koli4estvo_error+=1
-                        print("")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="3"
+                        print("12345")
+                    #try:
+                        hhghg=tt1.find('div', 'productPage__infoTextBold')
+                    data['имя']=re.sub('\s+',' ',hhghg.text)
+                    #except:
+                        #koli4estvo_error+=1
+                        #data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="4"
+                        #print("123456")
                     for item in soup.find_all('div', 'productPage__infoItem'):
                         try:
                             tt2=re.sub('\s+','',item.text)
@@ -88,7 +100,8 @@ if __name__ == '__main__':
                                 data["ссылка"]=re.sub('\s+',' ',item.find('a').attrs["href"])
                         except:
                             koli4estvo_error+=1
-                            print("")
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="5"
+                            print("1234567")
                     for item in soup.find_all('div', 'productPage__characteristicsItem'):
                         try:
                             i_temp1=item.find('span', 'productPage__characteristicsItemValue')
@@ -98,14 +111,16 @@ if __name__ == '__main__':
                             data[str(i_temp2)]=i_temp1
                         except:
                             koli4estvo_error+=1
-                            print("")
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="6"
+                            print("12345678")
                     try:    
                         opisanie_k=soup.find('p', 'productPage__descriptionText').text
                         opisanie_k=re.sub('\s+',' ',opisanie_k)
                         data["описание"]=opisanie_k
                     except:
                         koli4estvo_error+=1
-                        print("")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="7"
+                        print("123456789")
                     s4et=1
                     for item in soup.find_all('div', 'productPage__infoColumnBlock'):
                         data_info=[]
@@ -115,7 +130,8 @@ if __name__ == '__main__':
                             data["доп_инфа"+str(s4et)]=data_info
                         except:
                             koli4estvo_error+=1
-                            print("")
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="8"
+                            print("1234567890")
                         s4et+=1
                     try:
                         with open('data.json', 'a', encoding='utf-8') as fh:
@@ -124,7 +140,15 @@ if __name__ == '__main__':
                         koli4estvo_zapisey+=1
                         print(koli4estvo_zapisey)
                         print("ERROR="+str(koli4estvo_error))
+                        if koli4estvo_error>0:
+                            with open('data_error.json', 'a', encoding='utf-8') as fh:
+                                fh.write(json.dumps(data, ensure_ascii=False))
+                            
+                            koli4estvo_error=0
+                        data_error={}
                     except:
                         print("===================ERROR========================")
+                        data_error[str(koli4estvo_zapisey)+":"+"save"]="save"
                         time.sleep(10)
+                    
                     print("______________________")
