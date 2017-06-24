@@ -58,16 +58,32 @@ if __name__ == '__main__':
                     #productPage__infoTextBold
                     tt1=soup.find('div', 'productPage__inlineWrapper')
                     data['name']=re.sub('\s+',' ',tt1.find('div', 'productPage__infoTextBold').text)
-
+                    #str_test_ff=""
                     for item in soup.find_all('div', 'productPage__infoItem'):
                         tt2=re.sub('\s+','',item.text)
                         #print("1========================1")
                         #print(tt2)
                         #time.sleep(5)
                         if tt2.find("Место:")!=-1:
+                            
                             data["mesto"]=re.sub('\s+',' ',item.find('div', 'productPage__infoTextBold').text)
                             
-                        if tt2=="":
+                            #if re.sub('\s+',' ',item.find('div', 'productPage__infoTextBold').text)==" Москва, Шарикоподшипниковская ул, 6/14 ":
+                               # time.sleep(2)
+                                #print("1========================1")
+                                #str_test_ff="123"
+                                #print(tt2)
+                                #print("2========================1")
+                                #time.sleep(5)
+                        #if str_test_ff!="":
+                            #time.sleep(2)
+                            #print("123========================1")
+                            #str_test_ff="123"
+                            #print(tt2)
+                            #print("123========================1")
+                            #time.sleep(30)
+                                #Объявлениенасайтепродавца
+                        if tt2=="Объявлениенасайтепродавца":
                             
                             data["ssilka"]=re.sub('\s+',' ',item.find('a').attrs["href"])
 
