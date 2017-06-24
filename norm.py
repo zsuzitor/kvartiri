@@ -52,13 +52,13 @@ if __name__ == '__main__':
                     data["тип_жилья"]=tip_gilya_str
                     data["тип_объявления"]=tip_obyavleniya
                     list_img=[]
-                    for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
-                        list_img.append(image.attrs['content'])
+                    #for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
+                        #list_img.append(image.attrs['content'])
                         #
-                    #soup_img_div=soup.find('div','productGallery__nav')
-                    #lsth=soup_img_div.find_all("a")
-                    #for image in soup_img_div.find_all("a"):  
-                        #list_img.append(image.attrs["href"])
+                    soup_img_div=soup.find('div','productGallery__nav')
+                    lsth=soup_img_div.find_all("a")
+                    for image in soup_img_div.find_all("a"):  
+                        list_img.append(image.attrs["href"])
                     
                     data["картинки"]=list_img  
                     try:
@@ -67,30 +67,30 @@ if __name__ == '__main__':
                         data["хэдер"]=header
                     except:
                         koli4estvo_error+=1
-                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="1"
-                        print("123")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="хэдер"
+                        print("")
                     try:
                         cena=soup.find('div', 'productPage__price').text
                         cena=re.sub('\s+',' ',cena)
                         data["цена"]=cena
                     except:
                         koli4estvo_error+=1
-                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="2"
-                        print("1234")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="цена"
+                        print("")
                     try:
                         data['номер']=re.sub('\s+',' ',soup.find('div', 'productPage__phoneText').text)
                         tt1=soup.find('div', 'productPage__inlineWrapper')
                     except:
                         koli4estvo_error+=1
-                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="3"
-                        print("12345")
-                    #try:
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="номер"
+                        print("")
+                    try:
                         
-                    data['имя']=re.sub('\s+',' ',tt1.find('div', 'productPage__infoTextBold').text)
-                    #except:
-                        #koli4estvo_error+=1
-                        #data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="4"
-                        #print("123456")
+                        data['имя']=re.sub('\s+',' ',tt1.find('div', 'productPage__infoTextBold').text)
+                    except:
+                        koli4estvo_error+=1
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="имя"
+                        #print("")
                     for item in soup.find_all('div', 'productPage__infoItem'):
                         try:
                             tt2=re.sub('\s+','',item.text)
@@ -100,7 +100,7 @@ if __name__ == '__main__':
                                 data["ссылка"]=re.sub('\s+',' ',item.find('a').attrs["href"])
                         except:
                             koli4estvo_error+=1
-                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="5"
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="Место/ссылка"
                             print("1234567")
                     for item in soup.find_all('div', 'productPage__characteristicsItem'):
                         try:
@@ -111,16 +111,16 @@ if __name__ == '__main__':
                             data[str(i_temp2)]=i_temp1
                         except:
                             koli4estvo_error+=1
-                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="6"
-                            print("12345678")
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="подхэдер"
+                            print("")
                     try:    
                         opisanie_k=soup.find('p', 'productPage__descriptionText').text
                         opisanie_k=re.sub('\s+',' ',opisanie_k)
                         data["описание"]=opisanie_k
                     except:
                         koli4estvo_error+=1
-                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="7"
-                        print("123456789")
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="описание"
+                        print("")
                     s4et=1
                     for item in soup.find_all('div', 'productPage__infoColumnBlock'):
                         data_info=[]
@@ -130,8 +130,8 @@ if __name__ == '__main__':
                             data["доп_инфа"+str(s4et)]=data_info
                         except:
                             koli4estvo_error+=1
-                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="8"
-                            print("1234567890")
+                            data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="доп_инфа"
+                            print("")
                         s4et+=1
                     try:
                         with open('data.json', 'a', encoding='utf-8') as fh:
@@ -141,6 +141,7 @@ if __name__ == '__main__':
                         print(koli4estvo_zapisey)
                         print("ERROR="+str(koli4estvo_error))
                         if koli4estvo_error>0:
+                            data_error["url"]=url_page
                             with open('data_error.json', 'a', encoding='utf-8') as fh:
                                 fh.write(json.dumps(data_error, ensure_ascii=False))
                             
