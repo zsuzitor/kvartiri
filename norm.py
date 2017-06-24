@@ -142,7 +142,7 @@ if __name__ == '__main__':
                         print("ERROR="+str(koli4estvo_error))
                         if koli4estvo_error>0:
                             with open('data_error.json', 'a', encoding='utf-8') as fh:
-                                fh.write(json.dumps(data, ensure_ascii=False))
+                                fh.write(json.dumps(data_error, ensure_ascii=False))
                             
                             koli4estvo_error=0
                         data_error={}
