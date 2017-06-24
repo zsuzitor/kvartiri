@@ -50,13 +50,12 @@ if __name__ == '__main__':
                         print(cena)
                     except:
                         print("")
-                    pod_header_str_o=""
-                    for item in soup.find_all('span', 'productPage__characteristicsItemValue'):
-                        pod_header = item.text
-                        pod_header=re.sub('\s+',' ',pod_header)
-                        pod_header_str_o+=pod_header+" "
-                        print(pod_header)
-                    data["pod_header"]=pod_header_str_o
+                    for item in soup.find_all('div', 'productPage__characteristicsItem'):
+                        i_temp1=item.find('span', 'productPage__characteristicsItemValue')
+                        i_temp1=re.sub('\s+',' ',i_temp1.text)
+                        i_temp2=item.find('span', 'productPage__characteristicsItemTitle')
+                        i_temp2=re.sub('\s+',' ',i_temp2.text)
+                        data[str(i_temp2)]=i_temp1
                     try:    
                         opisanie_k=soup.find('p', 'productPage__descriptionText').text
                         opisanie_k=re.sub('\s+',' ',opisanie_k)
