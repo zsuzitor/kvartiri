@@ -52,13 +52,13 @@ if __name__ == '__main__':
                     data["тип_жилья"]=tip_gilya_str
                     data["тип_объявления"]=tip_obyavleniya
                     list_img=[]
-                    #for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
-                        #list_img.append(image.attrs['content'])
+                    for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
+                        list_img.append(image.attrs['content'])
                         #
-                    soup_img_div=soup.find('div','productGallery__nav')
-                    lsth=soup_img_div.find_all("a")
-                    for image in soup_img_div.find_all("a"):  
-                        list_img.append(image.attrs["href"])
+                    #soup_img_div=soup.find('div','productGallery__nav')
+                    #lsth=soup_img_div.find_all("a")
+                    #for image in soup_img_div.find_all("a"):  
+                        #list_img.append(image.attrs["href"])
                     
                     data["картинки"]=list_img  
                     try:
