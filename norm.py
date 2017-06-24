@@ -51,16 +51,26 @@ if __name__ == '__main__':
                     #СТРАНИЦА
                     data["тип_жилья"]=tip_gilya_str
                     data["тип_объявления"]=tip_obyavleniya
-                    list_img=[]
-                    for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
-                        list_img.append(image.attrs['content'])
-                        #
-                    #soup_img_div=soup.find('div','productGallery__nav')
-                    #lsth=soup_img_div.find_all("a")
-                    #for image in soup_img_div.find_all("a"):  
-                        #list_img.append(image.attrs["href"])
-                    
-                    data["картинки"]=list_img  
+                    try:
+                        list_img=[]
+                        for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
+                            list_img.append(image.attrs['content'])
+                        data["картинки"]=list_img
+                    except:
+                        koli4estvo_error+=1
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="картинки"
+                        print("")
+                    try:
+                        karta=soup.find('div', 'js-productPageMap')
+                        karta=str(karta)
+                        karta=re.sub('.*\{','',karta)
+                        karta=re.sub('\}.*','',karta)
+                        data["карта"]=karta
+                    except:
+                        koli4estvo_error+=1
+                        data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="карта"
+                        print("")
+                      
                     try:
                         header = soup.find('h1', 'productPage__title').text
                         header=re.sub('\s+',' ',header)
