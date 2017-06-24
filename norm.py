@@ -85,8 +85,8 @@ if __name__ == '__main__':
                         data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="3"
                         print("12345")
                     #try:
-                        hhghg=tt1.find('div', 'productPage__infoTextBold')
-                    data['имя']=re.sub('\s+',' ',hhghg.text)
+                        
+                    data['имя']=re.sub('\s+',' ',tt1.find('div', 'productPage__infoTextBold').text)
                     #except:
                         #koli4estvo_error+=1
                         #data_error[str(koli4estvo_zapisey)+":"+str(koli4estvo_error)]="4"
