@@ -64,15 +64,15 @@ if __name__ == '__main__':
                     except:
                         print("")
                     s4et=1
-                    temp=""
+                    #temp=""
                     for item in soup.find_all('div', 'productPage__infoColumnBlock'):
                         print('info{}'.format(s4et))
+                        data_info=[]
                         for item1 in item.find_all('li', 'productPage__infoColumnBlockText'):
-                            temp+=item1.text+" "
-                        temp=re.sub('\s+',' ',temp)
-                        print(temp)
-                        data["dop_info"+str(s4et)]=temp
-                        temp=""
+                            data_info.append(re.sub('\s+',' ',item1.text))
+                        #for x555 in data_info:
+                            #print(x555)
+                        data["dop_info"+str(s4et)]=data_info
                         s4et+=1
                     try:
                         with open('data.json', 'a', encoding='utf-8') as fh:
