@@ -50,15 +50,10 @@ if __name__ == '__main__':
                     #СТРАНИЦА
                     data["тип_жилья"]=tip_gilya_str
                     data["тип_объявления"]=tip_obyavleniya
-                    ####
                     list_img=[]
-                    for item in soup.find_all('img', 'lineGallery__image'):
-                        print("11111111111111")
-                        img1=item.attrs["src"]
-                        ##
-                        list_img.append(img1)
-                    data["картинки"]=list_img
-                     ####   
+                    for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
+                        list_img.append(image.attrs['content'])
+                    data["картинки"]=list_img  
                     try:
                         header = soup.find('h1', 'productPage__title').text
                         header=re.sub('\s+',' ',header)
