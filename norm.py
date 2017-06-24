@@ -12,7 +12,18 @@ if __name__ == '__main__':
     r_1 = requests.get(url_page_1)
     soup_1 = BeautifulSoup(r_1.text, 'html.parser')
     #страница со всеми разделами
+    tip_obyavleniya=""
+    tip_gilya_str="Жилая недвижимость"
+    tip_gilya_int=0
     for item1_1_bloki in soup_1.find_all('div', 'mainPageBlockCategory__wrapper'):
+        if tip_gilya_int==3 or tip_gilya_int==4:
+            tip_gilya_str="Коммерческая недвижимость"
+        if tip_gilya_int==5 or tip_gilya_int==6:
+            tip_gilya_str="Загородная недвижимость"
+        if tip_gilya_int==7 or tip_gilya_int==8:
+            tip_gilya_str="Гаражи и стоянки"
+        tip_gilya_int+=1
+        tip_obyavleniya=item1_1_bloki.find_all("a")[0].text
         odin_div_a="http://irr.ru"+item1_1_bloki.find_all("a")[0].attrs["href"]
         url_page_2 =odin_div_a
         r_2 = requests.get(url_page_2)
@@ -37,6 +48,17 @@ if __name__ == '__main__':
                     r = requests.get(url_page)
                     soup = BeautifulSoup(r.text, 'html.parser')
                     #СТРАНИЦА
+                    data["тип_жилья"]=tip_gilya_str
+                    data["тип_объявления"]=tip_obyavleniya
+                    ####
+                    list_img=[]
+                    for item in soup.find_all('img', 'lineGallery__image'):
+                        print("11111111111111")
+                        img1=item.attrs["src"]
+                        ##
+                        list_img.append(img1)
+                    data["картинки"]=list_img
+                     ####   
                     try:
                         header = soup.find('h1', 'productPage__title').text
                         header=re.sub('\s+',' ',header)
