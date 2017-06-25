@@ -51,6 +51,7 @@ if __name__ == '__main__':
                     #СТРАНИЦА
                     data["тип_жилья"]=tip_gilya_str
                     data["тип_объявления"]=tip_obyavleniya
+                    data["url_page"]=url_page
                     try:
                         list_img=[]
                         for image in soup.find('div', class_='lineGallery js-lineProductGallery').find_all('meta'):
